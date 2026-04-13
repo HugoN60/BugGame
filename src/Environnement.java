@@ -9,10 +9,11 @@ import java.util.ArrayList;
 
 public class Environnement extends Application {
     
-    public static ArrayList<Scarabe> scarabes = new ArrayList<>(); 
+    public static ArrayList<Insecte> insectes = new ArrayList<>(); 
 
     @Override
     public void start(Stage stage) {
+
         Pane pane = new Pane();
         Image fond = new Image("file:res/img/background.jpg");
         ImageView ivfond = new ImageView(fond);
@@ -21,7 +22,7 @@ public class Environnement extends Application {
         
         pane.getChildren().add(ivfond);
 
-        for(Scarabe s : scarabes) {
+        for(Insecte s : insectes) {
             pane.getChildren().add(s.body);
         }
         Scene scene = new Scene(pane, 1600, 1200);
@@ -35,19 +36,30 @@ public class Environnement extends Application {
             }
         };
         timer.start();
+
+        pane.setOnMouseClicked(event -> {
+            double x = event.getX();
+            double y = event.getY();
+            Scarabe sca = new Scarabe(x, y);
+            insectes.add(sca);
+            pane.getChildren().add(sca.body);
+        });
     }
 
     public static void main(String[] args) {
         Scarabe a = new Scarabe(800, 600);
         Scarabe b = new Scarabe(800, 600);
 
-        scarabes.add(a);
-        scarabes.add(b);
+        Coccinelle c = new Coccinelle(800, 600);
+
+        insectes.add(a);
+        insectes.add(b);
+        insectes.add(c);
         Application.launch(args);
     }
 
     public void update() {
-        for(Scarabe s : scarabes) {
+        for(Insecte s : insectes) {
             s.update();
         }
     }
